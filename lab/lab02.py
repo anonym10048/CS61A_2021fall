@@ -126,21 +126,10 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
-    def curry1(n):
-        def curry2(m):
-            if n == 0:
-                return m
-            value, last_value = 0, m
-            for i in range(1, n + 1):
-                if i % 3 == 1:
-                    k = f1
-                elif i % 3 == 2:
-                    k = f2
-                else:
-                    k = f3
-                value = k(last_value)
-                last_value = value
-            return value
-        return curry2
-    return curry1
+    def depth(n):
+        if n == 0:
+            return lambda x: x
+        else:
+            return lambda x: cycle(f2, f1, f3)(n - 1)(f1(x))
+    return depth
 
